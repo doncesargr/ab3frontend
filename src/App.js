@@ -5,9 +5,22 @@ import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import logo from "./public/assets/AnyCLogo.png";
-
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 import "./App.css";
 import { HideImageOutlined } from "@mui/icons-material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "10",
+  /*transform: "translate(-50%, -50%)", */
+  width: "fit-content",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 2,
+};
 
 var newPower;
 var newTemp;
@@ -50,11 +63,16 @@ function Welcome(props) {
 }
 
 function MyButton(props) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   function postMessage() {
     var endpoint = "https://0gjkyqhhw2.execute-api.us-east-1.amazonaws.com/dev";
 
     var queryString = `?power=${props.power}&temp=${props.temp}`;
     var url = endpoint + queryString;
+
     console.log(props);
     fetch(url, {
       method: "GET",
@@ -64,7 +82,11 @@ function MyButton(props) {
       },
     })
       .then((response) => response.json())
-      .then((m) => console.log(m.payload));
+      .then((m) => {
+        console.log(m.payload);
+        handleOpen();
+      });
+
     return;
   }
 
@@ -73,6 +95,13 @@ function MyButton(props) {
       <Button variant="contained" size="large" onClick={postMessage}>
         Desplegar Actualización
       </Button>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Nuevo Modelo Desplegado
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 }
