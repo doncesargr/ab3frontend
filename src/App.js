@@ -186,11 +186,3 @@ function App() {
 }
 
 export default App;
-
-/*
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Cambios Aplicados
-          </Typography>
-        </Box>
-*/
