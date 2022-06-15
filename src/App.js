@@ -62,18 +62,30 @@ function Welcome(props) {
   return <h1>{props.name}</h1>;
 }
 
-function MyButton(props) {
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [valuePower, setValuePower] = useState(50);
+  const [valueTemp, setValueTemp] = useState(20);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handlePowerChange = (event, newValue) => {
+    setValuePower(newValue);
+  };
+
+  const handleTempChange = (event, newValue) => {
+    setValueTemp(newValue);
+  };
+
   function postMessage() {
     var endpoint = "https://0gjkyqhhw2.execute-api.us-east-1.amazonaws.com/dev";
 
-    var queryString = `?power=${props.power}&temp=${props.temp}`;
+    var queryString = `?power=${valuePower}&temp=${valueTemp}`;
     var url = endpoint + queryString;
 
-    console.log(props);
+    console.log(queryString);
     fetch(url, {
       method: "GET",
       headers: {
@@ -90,35 +102,6 @@ function MyButton(props) {
     return;
   }
 
-  return (
-    <div className="btn_normal">
-      <Button variant="contained" size="large" onClick={postMessage}>
-        Desplegar Actualización
-      </Button>
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Nuevo Modelo Desplegado
-          </Typography>
-        </Box>
-      </Modal>
-    </div>
-  );
-}
-
-function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [valuePower, setValuePower] = useState(50);
-  const [valueTemp, setValueTemp] = useState(20);
-
-  const handlePowerChange = (event, newValue) => {
-    setValuePower(newValue);
-  };
-
-  const handleTempChange = (event, newValue) => {
-    setValueTemp(newValue);
-  };
-
   useEffect(() => {
     setIsLoading(false);
   }, []);
@@ -133,56 +116,74 @@ function App() {
   var powerText;
 
   return (
-    <div className="App">
-      <div>
-        <div className="crop">
-          <Box
-            component="img"
-            sx={{
-              height: 233,
-              width: 250,
-              maxHeight: { xs: 233, md: 167 },
-              maxWidth: { xs: 350, md: 250 },
-            }}
-            src={logo}
-          />
-        </div>
+    <>
+      <div className="App">
+        <div>
+          <div className="crop">
+            <Box
+              component="img"
+              sx={{
+                height: 233,
+                width: 250,
+                maxHeight: { xs: 233, md: 167 },
+                maxWidth: { xs: 350, md: 250 },
+              }}
+              src={logo}
+            />
+          </div>
 
-        <div className="sliderbox">
-          <Box sx={{ width: 300, border: "1px solid grey" }}>
-            <TextField
-              id="standard-basic"
-              label="Ajuste de Temperatura"
-              variant="standard"
-            />
-            <Slider
-              aria-label="Temperature"
-              value={valueTemp}
-              getAriaValueText={temptext}
-              valueLabelDisplay="auto"
-              step={1}
-              min={0}
-              max={20}
-              marks={marks}
-              onChange={handleTempChange}
-            />
-          </Box>
-          <Box sx={{ width: 300, border: "1px solid grey" }}>
-            <TextField id="standard-basic" label="Energía" variant="standard" />
-            <Slider
-              value={valuePower}
-              step={1}
-              min={0}
-              max={100}
-              getAriaValueText={powertext}
-              valueLabelDisplay="auto"
-              onChange={handlePowerChange}
-            />
-          </Box>
+          <div className="sliderbox">
+            <Box sx={{ width: 300, border: "1px solid grey" }}>
+              <TextField
+                id="standard-basic"
+                label="Ajuste de Temperatura"
+                variant="standard"
+              />
+              <Slider
+                aria-label="Temperature"
+                value={valueTemp}
+                getAriaValueText={temptext}
+                valueLabelDisplay="auto"
+                step={1}
+                min={0}
+                max={20}
+                marks={marks}
+                onChange={handleTempChange}
+              />
+            </Box>
+            <Box sx={{ width: 300, border: "1px solid grey" }}>
+              <TextField
+                id="standard-basic"
+                label="Energía"
+                variant="standard"
+              />
+              <Slider
+                value={valuePower}
+                step={1}
+                min={0}
+                max={100}
+                getAriaValueText={powertext}
+                valueLabelDisplay="auto"
+                onChange={handlePowerChange}
+              />
+            </Box>
+          </div>
+          <MyButton title="Normal" />
+          <div className="btn_normal">
+            <Button variant="contained" size="large" onClick={postMessage}>
+              Desplegar Actualización
+            </Button>
+          </div>
         </div>
-        <MyButton title="Normal" power={valuePower} temp={valueTemp} />
       </div>
-    </div>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Nuevo Modelo Desplegado
+          </Typography>
+        </Box>
+      </Modal>
+    </>
   );
 }
 
