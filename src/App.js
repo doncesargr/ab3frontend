@@ -6,15 +6,13 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import logo from "./public/assets/AnyCLogo.png";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import Dialog from "@mui/material/Dialog";
 import "./App.css";
 import { HideImageOutlined } from "@mui/icons-material";
 
 const style = {
-  position: "absolute",
   top: "50%",
-  left: "10",
-  /*transform: "translate(-50%, -50%)", */
+  left: "25%",
   width: "fit-content",
   bgcolor: "background.paper",
   border: "2px solid #000",
@@ -168,7 +166,7 @@ function App() {
               />
             </Box>
           </div>
-          <MyButton title="Normal" />
+
           <div className="btn_normal">
             <Button variant="contained" size="large" onClick={postMessage}>
               Desplegar Actualización
@@ -176,15 +174,23 @@ function App() {
           </div>
         </div>
       </div>
-      <Modal open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} disableScrollLock={true}>
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Nuevo Modelo Desplegado
+            Cambios Aplicados
           </Typography>
         </Box>
-      </Modal>
+      </Dialog>
     </>
   );
 }
 
 export default App;
+
+/*
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Cambios Aplicados
+          </Typography>
+        </Box>
+*/

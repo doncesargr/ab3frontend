@@ -1,9 +1,10 @@
-#root {
+/*#root {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+}*/
+
 .App {
   text-align: center;
   width: 100%;
@@ -37,6 +38,7 @@
   margin: 10px;
   padding: 20px;
 }
+
 
 .crop {
   display: flex;
