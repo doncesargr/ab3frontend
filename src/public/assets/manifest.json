@@ -3,7 +3,7 @@
     "name": "AnyCompany Energy - Web App",
     "icons": [
       {
-        "src": "/public/assets/ModernLogo512by512pxv1.png",
+        "src": "/public/assets/ModernLogo512by512pxv10.png",
         "type": "image/png",
         "sizes": "512x512"
       }
